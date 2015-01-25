@@ -26,6 +26,7 @@ BEGIN_MESSAGE_MAP(CMFCView, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+	ON_WM_CREATE()
 END_MESSAGE_MAP()
 
 // CMFCView construction/destruction
@@ -102,3 +103,15 @@ CMFCDoc* CMFCView::GetDocument() const // non-debug version is inline
 
 
 // CMFCView message handlers
+
+
+int CMFCView::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CView::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	// TODO:  Add your specialized creation code here
+	m_btn.Create(L"Text", WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON, CRect(100, 0, 150, 50), this, 123); //this -> GetParent() 
+
+	return 0;
+}
