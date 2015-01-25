@@ -48,8 +48,12 @@ public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 private:
 	CPoint m_ptOrigin;
+	BOOL m_bDraw;
 public:
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+private:
+	CPoint m_ptOld;
 };
 
 #ifndef _DEBUG  // debug version in MFCView.cpp

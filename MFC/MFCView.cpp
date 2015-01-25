@@ -29,6 +29,7 @@ BEGIN_MESSAGE_MAP(CMFCView, CView)
 	ON_WM_CREATE()
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 // CMFCView construction/destruction
@@ -36,7 +37,9 @@ END_MESSAGE_MAP()
 CMFCView::CMFCView()
 {
 	// TODO: add construction code here
-
+	m_ptOrigin = 0;
+	m_ptOld = 0;
+	m_bDraw = FALSE;
 }
 
 CMFCView::~CMFCView()
@@ -123,7 +126,8 @@ void CMFCView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: Add your message handler code here and/or call default
 	// MessageBox(L"View Clicked");
-	m_ptOrigin = point;
+	m_ptOrigin = m_ptOld = point;
+	m_bDraw = TRUE;
 
 	CView::OnLButtonDown(nFlags, point);
 }
@@ -168,11 +172,35 @@ void CMFCView::OnLButtonUp(UINT nFlags, CPoint point)
 	//CClientDC dc(this);
 	//dc.FillRect(CRect(m_ptOrigin,point), &brush);
 
-	CClientDC dc(this);
-	CBrush* pBrush = CBrush::FromHandle((HBRUSH)GetStockObject(NULL_BRUSH));
-	CBrush* pOldBrush = dc.SelectObject(pBrush);
-	dc.Rectangle(CRect(m_ptOrigin, point));
-	dc.SelectObject(pOldBrush);
+	//CClientDC dc(this);
+	//CBrush* pBrush = CBrush::FromHandle((HBRUSH)GetStockObject(NULL_BRUSH));
+	//CBrush* pOldBrush = dc.SelectObject(pBrush);
+	//dc.Rectangle(CRect(m_ptOrigin, point));
+	//dc.SelectObject(pOldBrush);
+
+	m_bDraw = FALSE;
 
 	CView::OnLButtonUp(nFlags, point);
+}
+
+
+void CMFCView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+	CClientDC dc(this);
+	CPen pen(PS_SOLID, 1, RGB(255, 0, 0));
+	CPen* pOldPen = dc.SelectObject(&pen);
+	if (m_bDraw == TRUE)
+	{
+		//dc.SetROP2(R2_BLACK);
+		dc.MoveTo(m_ptOrigin);
+		//dc.LineTo(point);
+		dc.LineTo(m_ptOld);
+		dc.MoveTo(m_ptOld); //dc.MoveTo(m_ptOrigin);
+		dc.LineTo(point);
+		//m_ptOrigin = point;
+		m_ptOld = point;
+	}
+	dc.SelectObject(pOldPen);
+	CView::OnMouseMove(nFlags, point);
 }
