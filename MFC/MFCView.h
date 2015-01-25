@@ -46,6 +46,10 @@ private:
 public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+private:
+	CPoint m_ptOrigin;
+public:
+	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // debug version in MFCView.cpp

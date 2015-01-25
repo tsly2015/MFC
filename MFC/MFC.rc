@@ -78,6 +78,7 @@ IDR_MFCTYPE             ICON                    "res\\MFCDoc.ico"
 //
 
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+IDB_BITMAP1             BITMAP                  "res\\bitmap1.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //

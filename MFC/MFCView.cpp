@@ -28,6 +28,7 @@ BEGIN_MESSAGE_MAP(CMFCView, CView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
 	ON_WM_CREATE()
 	ON_WM_LBUTTONDOWN()
+	ON_WM_LBUTTONUP()
 END_MESSAGE_MAP()
 
 // CMFCView construction/destruction
@@ -121,7 +122,57 @@ int CMFCView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CMFCView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: Add your message handler code here and/or call default
-	MessageBox(L"View Clicked");
+	// MessageBox(L"View Clicked");
+	m_ptOrigin = point;
 
 	CView::OnLButtonDown(nFlags, point);
+}
+
+
+void CMFCView::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+	//HDC hdc;
+	//hdc = ::GetDC(m_hWnd);
+	//MoveToEx(hdc, m_ptOrigin.x, m_ptOrigin.y, NULL);
+	//LineTo(hdc, point.x, point.y);
+	//::ReleaseDC(m_hWnd, hdc);
+
+	//CDC *pDC = GetDC();
+	//pDC->MoveTo(m_ptOrigin);
+	//pDC->LineTo(point);
+	//ReleaseDC(pDC);
+
+	//CClientDC dc(this); //GetParent()
+	//dc.MoveTo(m_ptOrigin);
+	//dc.LineTo(point);
+
+	//CWindowDC dc(this); //GetParent(), GetDesktopWindow()
+	//dc.MoveTo(m_ptOrigin);
+	//dc.LineTo(point);
+
+	//CPen pen(PS_SOLID, 1, RGB(255, 0, 0));
+	//CClientDC dc(this);
+	//CPen *pOldPen = dc.SelectObject(&pen);
+	//dc.MoveTo(m_ptOrigin);
+	//dc.LineTo(point);
+	//dc.SelectObject(pOldPen);
+
+	//CBrush brush(RGB(255, 0, 0));
+	//CClientDC dc(this);
+	//dc.FillRect(CRect(m_ptOrigin, point), &brush);
+
+	//CBitmap bitmap;
+	//bitmap.LoadBitmapW(IDB_BITMAP1);
+	//CBrush brush(&bitmap);
+	//CClientDC dc(this);
+	//dc.FillRect(CRect(m_ptOrigin,point), &brush);
+
+	CClientDC dc(this);
+	CBrush* pBrush = CBrush::FromHandle((HBRUSH)GetStockObject(NULL_BRUSH));
+	CBrush* pOldBrush = dc.SelectObject(pBrush);
+	dc.Rectangle(CRect(m_ptOrigin, point));
+	dc.SelectObject(pOldBrush);
+
+	CView::OnLButtonUp(nFlags, point);
 }
