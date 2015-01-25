@@ -21,6 +21,7 @@ const UINT uiLastUserToolBarId = uiFirstUserToolBarId + iMaxUserToolbars - 1;
 
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CREATE()
+	ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -99,3 +100,12 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 // CMainFrame message handlers
 
+
+
+void CMainFrame::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+	MessageBox(L"Mainframe Clicked"); //hidden by CView
+
+	CFrameWnd::OnLButtonDown(nFlags, point);
+}

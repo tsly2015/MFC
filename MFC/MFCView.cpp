@@ -27,6 +27,7 @@ BEGIN_MESSAGE_MAP(CMFCView, CView)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
 	ON_WM_CREATE()
+	ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 // CMFCView construction/destruction
@@ -114,4 +115,13 @@ int CMFCView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_btn.Create(L"Text", WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON, CRect(100, 0, 150, 50), this, 123); //this -> GetParent() 
 
 	return 0;
+}
+
+
+void CMFCView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: Add your message handler code here and/or call default
+	MessageBox(L"View Clicked");
+
+	CView::OnLButtonDown(nFlags, point);
 }
